@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PartStats": {
+      "commandName": "Project",
+      "commandLineArgs": "web D:\\MyDirectory\\address.txt"
+    }
+  }
+}
