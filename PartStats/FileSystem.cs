@@ -20,13 +20,8 @@ namespace PartStats
 
         public string Path { get; set; }
 
-        public void StartProcess(bool permissions)
+        public void StartProcess()
         {
-            if (!permissions)
-            {
-                throw new UnauthorizedAccessException("UnAuthorizedAccessException: Access Denied.");
-            }
-
             Stopwatch stopwatch = new Stopwatch();
 
             foreach (var file in this.GetAllDirectoryFiles())
@@ -36,54 +31,6 @@ namespace PartStats
 
             stopwatch.Stop();
             Console.WriteLine("Processing time - " + stopwatch.ElapsedMilliseconds + "c");
-        }
-
-        public bool CheckPermissions()
-        {
-            var dirInfo = new DirectoryInfo(this.Path);
-            DirectorySecurity dSecurity = dirInfo.GetAccessControl();
-            bool readAllow = false;
-            bool readDeny = false;
-            if (dSecurity == null)
-            {
-                return false;
-            }
-
-            AuthorizationRuleCollection accessRules = dSecurity.GetAccessRules(true, true,
-                                        typeof(SecurityIdentifier));
-            if (accessRules == null)
-            {
-                return false;
-            }
-
-            foreach (FileSystemAccessRule ace in accessRules)
-            {
-                Console.WriteLine("Account: {0}", ace.IdentityReference.Value);
-                Console.WriteLine("Type: {0}", ace.AccessControlType);
-                Console.WriteLine("Rights: {0}", ace.FileSystemRights);
-                Console.WriteLine("Inherited: {0}", ace.IsInherited);
-
-                Console.WriteLine("------------------------");
-            }
-
-            foreach (FileSystemAccessRule rule in accessRules)
-            {
-                if ((FileSystemRights.Read & rule.FileSystemRights) != FileSystemRights.Read)
-                {
-                    continue;
-                }
-
-                if (rule.AccessControlType == AccessControlType.Allow)
-                {
-                    readAllow = true;
-                }
-                else if (rule.AccessControlType == AccessControlType.Deny)
-                {
-                    readDeny = true;
-                }
-            }
-
-            return readAllow && !readDeny;
         }
 
         public void GetOutput()

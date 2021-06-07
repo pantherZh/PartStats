@@ -10,14 +10,6 @@ namespace PartStatsTests
         [SetUp]
         public void Setup() { }
 
-        [Test]
-        public void StartThread_PermissionsAreFalse_ThrowUnauthorizedAccessException()
-        {
-            var system = new FileSystem(@"Path");
-            var permission = false;
-            Assert.Throws<UnauthorizedAccessException>(() => system.StartProcess(permission), "UnAuthorizedAccessException: Access Denied.");
-        }
-
         [TestCase("test", false)]
         public void ProcessFile_FileIsNotCorrect_CheckThrowIOException(string file, bool expectedResult)
         {

@@ -18,16 +18,15 @@ namespace PartStats
             {
                 ValidatePathDirectory(args[1]);
                 FileSystem system = new FileSystem(args[1]);
-                system.StartProcess(system.CheckPermissions());
+                system.StartProcess();
                 system.GetOutput();
             }
             else if (args[0].Equals("web", StringComparison.CurrentCultureIgnoreCase))
             {
                 ValidatePathFile(args[1]);
                 WebSystem system = new WebSystem(args[1]);
-
+                system.StartProcess();
                 await system.GetURL();
-                system.StartProcess(system.CheckPermissions());
                 system.GetOutput();
             }
             else
