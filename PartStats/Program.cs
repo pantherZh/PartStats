@@ -19,7 +19,7 @@ namespace PartStats
                 ValidatePathDirectory(args[1]);
                 FileSystem system = new FileSystem(args[1]);
                 system.StartProcess();
-                system.GetOutput();
+                Data.GetOutput();
             }
             else if (args[0].Equals("web", StringComparison.CurrentCultureIgnoreCase))
             {
@@ -27,7 +27,7 @@ namespace PartStats
                 WebSystem system = new WebSystem(args[1]);
                 system.StartProcess();
                 await system.GetURL();
-                system.GetOutput();
+                Data.GetOutput();
             }
             else
             {
